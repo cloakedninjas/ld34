@@ -6,15 +6,17 @@ module Ldm34.Entity {
         static FOOD_LEVEL_REQUIREMENT:number = 20;
 
         game:Game;
-        size:number;
-        shrinkFactor:number;
         face:Phaser.Sprite;
         mouth:Phaser.Sprite;
         faceHitArea:Phaser.Ellipse;
         mouthHitArea:Phaser.Ellipse;
+
+        onFull:Phaser.Signal;
+
         mouthOpen:boolean = true;
         foodSplats:Food[];
         scaleIncrement:number;
+        foodLevel:number;
         anger:number = 0;
         angerIncrement:number = 1;
 
@@ -38,11 +40,13 @@ module Ldm34.Entity {
             this.mouth.anchor.y = 0.5;
             this.face.addChild(this.mouth);
 
-            this.faceHitArea = new Phaser.Ellipse(0, 0, this.face.width, this.face.height);
-            //this.mouthHitArea = new Phaser.Circle(this.x, this.y, 460);
+            this.faceHitArea = new Phaser.Ellipse(0, 0, 1, 1);
+            this.mouthHitArea = new Phaser.Ellipse(0, 0, 1, 1);
 
-            this.setScale(1); //Baby.START_SCALE
+            //this.setScale(1);
+            this.setScale(Baby.START_SCALE);
             this.foodSplats = [];
+            this.onFull = new Phaser.Signal();
         }
 
         setScale(scale:number) {
@@ -51,20 +55,24 @@ module Ldm34.Entity {
             this.faceHitArea.height = this.face.height * scale;
 
             this.faceHitArea.x = this.x + this.face.x - ((this.face.width * this.face.anchor.x) * scale);
-            this.faceHitArea.y = this.y + this.face.y - ((this.face.height * this.face.anchor.y) * scale);
+            this.faceHitArea.y = this.y + (this.face.y * scale) - ((this.face.height * this.face.anchor.y) * scale);
+
+            this.mouthHitArea.width = this.mouth.width * scale;
+            this.mouthHitArea.height = this.mouth.height * scale;
+
+            this.mouthHitArea.x = this.x + this.face.x + this.mouth.x - ((this.mouth.width * this.mouth.anchor.x) * scale);
+            this.mouthHitArea.y = this.y + (this.face.y * scale) + (this.mouth.y * scale) - ((this.mouth.height * this.mouth.anchor.y) * scale);
         }
 
-        feed(){
-            var increment = Baby.FOOD_VALUE;
-            this.size += increment;
-            this.scale.add(this.scaleIncrement * increment, this.scaleIncrement * increment);
+        feed() {
+            this.foodLevel += Baby.FOOD_VALUE;
+
+            if (this.foodLevel === Baby.FOOD_LEVEL_REQUIREMENT) {
+                this.onFull.dispatch();
+            }
         }
 
         addSplat(food:Food) {
-            this.game.world.remove(food);
-            this.addChild(food);
-            food.x = food.x - this.x;
-            food.y = food.y - this.y;
             this.foodSplats.push(food);
             this.anger += this.angerIncrement;
 
@@ -81,7 +89,7 @@ module Ldm34.Entity {
         update() {
             /*this.foodSplats.forEach(function (food) {
 
-            }, this);*/
+             }, this);*/
         }
 
     }

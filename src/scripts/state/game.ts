@@ -1,18 +1,24 @@
 module Ldm34.State {
     export class Game extends Phaser.State {
+        static LEVEL_COUNT:number = 2;
 
         baby:Entity.Baby;
         player:Entity.Player;
+        roundCounter:number = 1;
 
         create() {
             var game = this.game,
+                totalHeight = Game.LEVEL_COUNT * game.height,
                 bg = this.add.sprite(game.world.centerX, 0, 'background');
             bg.anchor.x = 0.5;
 
-            this.baby = new Entity.Baby(game, game.world.centerX, game.world.centerY + 300);
+            game.world.setBounds(0, 0, game.width, totalHeight);
+            game.camera.y = totalHeight - game.height;
+
+            this.baby = new Entity.Baby(game, game.world.centerX, game.camera.y + game.height);
             this.add.existing(this.baby);
 
-            var chair = game.add.sprite(game.world.centerX, game.height, 'highchair');
+            var chair = game.add.sprite(game.world.centerX, totalHeight, 'highchair');
             chair.anchor.x = 0.5;
             chair.anchor.y = 1;
 
@@ -23,18 +29,44 @@ module Ldm34.State {
                 var food = new Entity.Food(game, this.player.position.x, this.player.position.y, this.baby);
                 this.world.addChildAt(food, this.world.getChildIndex(this.player));
             }, this);
+
+            this.baby.onFull.add(this.handleBabyFull, this);
         }
 
         render() {
             //this.game.debug.geom(this.baby.faceHitArea,'rgba(33,44,55,0.5)', true, 3);
 
-            var x = this.baby.faceHitArea.x,
-                y = this.baby.faceHitArea.y;
+            var x = this.baby.mouthHitArea.x,
+                y = this.baby.mouthHitArea.y,
+                w = this.baby.mouthHitArea.width,
+                h = this.baby.mouthHitArea.height;
             this.game.debug.geom(
-                new Phaser.Rectangle(x, y, this.baby.faceHitArea.width, this.baby.faceHitArea.height),
+                new Phaser.Rectangle(x, y, w, h),
                 'rgba(33,44,55,0.5)'
             );
+        }
 
+        beginNewLevel() {
+            this.roundCounter++;
+
+            var game = this.game,
+                y = (game.height * Game.LEVEL_COUNT) - this.roundCounter * game.height;
+
+            //console.log(this.game.camera.y, y);
+
+            var tween = this.tweens.create(this.camera).to({
+                y: y
+            }, 1000, Phaser.Easing.Sinusoidal.Out, true, 500);
+
+            tween.onComplete.add(function () {
+                this.tweens.create(this.baby).to({
+                    y: this.baby.y - game.height
+                }, 1000, Phaser.Easing.Sinusoidal.Out, true, 500)
+            }, this);
+        }
+
+        private handleBabyFull() {
+            this.beginNewLevel();
         }
     }
 }

@@ -34,22 +34,42 @@ module Ldm34.Entity {
                     this.body.velocity.setTo(0, 0);
                     this.flying = false;
 
-                    if (this.baby.faceHitArea.contains(this.x, this.y)) {
+                    if (this.baby.mouthHitArea.contains(this.x, this.y)) {
+                        this.remove();
+                        this.baby.feed();
+                    }
+                    else if (this.baby.faceHitArea.contains(this.x, this.y)) {
+                        this.splat();
                         this.baby.addSplat(this);
                     }
                     else {
-                        var tween = this.game.tweens.create(this.scale).to({
-                            x: 0,
-                            y: 0
-                        }, 200, Phaser.Easing.Linear.None, true);
-
-                        tween.onComplete.add(function () {
-                            this.destroy();
-                        }, this);
+                        this.remove();
                     }
                 }
             }
         }
 
+        splat() {
+            this.loadTexture(this.key + '-splat');
+
+            var tween = this.game.tweens.create(this).to({
+                alpha: 0
+            }, 1000, Phaser.Easing.Linear.None, true, 1000);
+
+            tween.onComplete.add(function () {
+                this.destroy();
+            }, this);
+        }
+
+        remove() {
+            var tween = this.game.tweens.create(this.scale).to({
+                x: 0,
+                y: 0
+            }, 200, Phaser.Easing.Linear.None, true);
+
+            tween.onComplete.add(function () {
+                this.destroy();
+            }, this);
+        }
     }
 }
