@@ -16,7 +16,7 @@ module Ldm34.Entity {
         mouthOpen:boolean = true;
         foodSplats:Food[];
         scaleIncrement:number;
-        foodLevel:number;
+        foodLevel:number = 0;
         anger:number = 0;
         angerIncrement:number = 1;
 
@@ -26,8 +26,6 @@ module Ldm34.Entity {
             this.anchor.x = 0.5;
             this.anchor.y = 0.75;
 
-            //this.pivot.x = 260;
-            //this.pivot.y = 515;
             this.scaleIncrement = (1 - Baby.START_SCALE) / Baby.FOOD_LEVEL_REQUIREMENT;
 
             this.face = new Phaser.Sprite(game, 0, -230, 'baby-face');
@@ -43,7 +41,6 @@ module Ldm34.Entity {
             this.faceHitArea = new Phaser.Ellipse(0, 0, 1, 1);
             this.mouthHitArea = new Phaser.Ellipse(0, 0, 1, 1);
 
-            //this.setScale(1);
             this.setScale(Baby.START_SCALE);
             this.foodSplats = [];
             this.onFull = new Phaser.Signal();
@@ -91,6 +88,5 @@ module Ldm34.Entity {
 
              }, this);*/
         }
-
     }
 }

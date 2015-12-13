@@ -9,7 +9,7 @@ module Ldm34.Entity {
         flying:boolean = true;
 
         constructor(game:Game, destX:number, destY:number, baby:Baby, foodType?:number) {
-            super(game, game.world.centerX, game.world.height + 100);
+            super(game, game.world.centerX, game.camera.y + game.height + 50);
             this.baby = baby;
             this.destination = new Phaser.Point(destX, destY);
             this.foodType = foodType || Food.TYPE_PEA;

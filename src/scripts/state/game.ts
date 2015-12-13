@@ -54,15 +54,28 @@ module Ldm34.State {
 
             //console.log(this.game.camera.y, y);
 
-            var tween = this.tweens.create(this.camera).to({
-                y: y
-            }, 1000, Phaser.Easing.Sinusoidal.Out, true, 500);
+            var tween = this.tweens.create(this.baby.scale).to({
+                x: 1,
+                y: 1
+            }, 1200, Phaser.Easing.Sinusoidal.Out, true, 500);
 
             tween.onComplete.add(function () {
+                var duration = 1000;
+
+                this.tweens.create(this.camera).to({
+                    y: y
+                }, duration, Phaser.Easing.Sinusoidal.Out, true);
+
                 this.tweens.create(this.baby).to({
                     y: this.baby.y - game.height
-                }, 1000, Phaser.Easing.Sinusoidal.Out, true, 500)
+                }, duration, Phaser.Easing.Sinusoidal.Out, true);
+
+                this.tweens.create(this.baby.scale).to({
+                    x: Entity.Baby.START_SCALE,
+                    y: Entity.Baby.START_SCALE
+                }, duration, Phaser.Easing.Sinusoidal.Out, true);
             }, this);
+
         }
 
         private handleBabyFull() {
