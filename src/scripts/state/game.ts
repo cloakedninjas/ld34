@@ -1,6 +1,6 @@
 module Ldm34.State {
     export class Game extends Phaser.State {
-        static LEVEL_COUNT:number = 2;
+        static LEVEL_COUNT:number = 11;
 
         uiGroup:Phaser.Group;
         baby:Entity.Baby;

@@ -7,7 +7,10 @@ module Ldm34.Entity {
         static START_SCALE:number = 0.53;
         static FOOD_VALUE:number = 1;
         static FOOD_LEVEL_REQUIREMENT:number = 20;
-        static ROCK_SPEED:number = 0.02;
+        static BODY_ROCK_SPEED:number = 0.02;
+        static HEAD_ROCK_SPEED:number = 0.03;
+        static BODY_ROCK_VARIANCE:number = 10;
+        static HEAD_ROCK_VARIANCE:number = 12;
 
         game:Game;
         face:Phaser.Sprite;
@@ -19,6 +22,8 @@ module Ldm34.Entity {
         onAngerChange:Phaser.Signal;
 
         rocking:boolean = false;
+        rockTimer:Phaser.TimerEvent;
+        mouthTimer:Phaser.TimerEvent;
         numberOfTicks:number = 0;
         mouthOpen:boolean = true;
         foodSplats:Food[];
@@ -53,6 +58,8 @@ module Ldm34.Entity {
             this.foodSplats = [];
             this.onFull = new Phaser.Signal();
             this.onAngerChange = new Phaser.Signal();
+            this.rockTimer = game.time.events.add(Lib.random(2000, 5000), this.rock, this);
+            this.mouthTimer = game.time.events.add(Lib.random(2000, 5000), this.toggleMouth, this);
         }
 
         setScale(scale:number) {
@@ -71,7 +78,6 @@ module Ldm34.Entity {
         }
 
         checkFoodLanded(food:Food) {
-            console.log('poop');
             if (this.mouthOpen && this.mouthHitArea.contains(food.x, food.y)) {
                 food.remove();
                 this.feed(food);
@@ -99,17 +105,16 @@ module Ldm34.Entity {
         }
 
         rock() {
-            this.rocking = true;
+            this.rocking = !this.rocking;
+
+            var rockMax = this.rocking ? 10000 : 5000;
+            this.rockTimer = this.game.time.events.add(Lib.random(2000, rockMax), this.rock, this);
         }
 
-        openMouth() {
-            this.mouthOpen = true;
-            this.mouth.loadTexture('baby-mouth');
-        }
-
-        closeMouth() {
-            this.mouthOpen = false;
-            this.mouth.loadTexture('baby-mouth-closed');
+        toggleMouth() {
+            this.mouthOpen = !this.mouthOpen;
+            this.mouth.loadTexture(this.mouthOpen ? 'baby-mouth' : 'baby-mouth-closed');
+            this.mouthTimer = this.game.time.events.add(Lib.random(2000, 7000), this.toggleMouth, this);
         }
 
         addSplat(food:Food) {
@@ -133,7 +138,8 @@ module Ldm34.Entity {
 
             if (this.rocking) {
                 this.numberOfTicks++;
-                this.angle = Math.sin(this.numberOfTicks * Baby.ROCK_SPEED * Math.PI) * 10;
+                this.angle = Math.sin(this.numberOfTicks * Baby.BODY_ROCK_SPEED * Math.PI) * Baby.BODY_ROCK_VARIANCE;
+                this.face.angle = Math.sin(this.numberOfTicks * Baby.HEAD_ROCK_SPEED * Math.PI) * Baby.HEAD_ROCK_VARIANCE;
 
             }
         }
