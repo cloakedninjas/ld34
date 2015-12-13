@@ -21,6 +21,8 @@ module Ldm34.Entity {
         onFull:Phaser.Signal;
         onAngerChange:Phaser.Signal;
 
+        rockSpeed:number = Baby.BODY_ROCK_SPEED;
+        rockVariance:number = Baby.BODY_ROCK_VARIANCE;
         rocking:boolean = false;
         rockTimer:Phaser.TimerEvent;
         mouthTimer:Phaser.TimerEvent;
@@ -123,8 +125,14 @@ module Ldm34.Entity {
             this.checkAngerLevel(newAngerLevel);
             this.anger = newAngerLevel;
 
-            if (this.anger === Baby.ANGER_ANGRY) {
+            if (this.anger >= Baby.ANGER_ANGRY) {
+                this.game.time.events.remove(this.mouthTimer);
+                this.game.time.events.remove(this.rockTimer);
 
+                this.mouthOpen = true;
+                this.rocking = true;
+                this.rockSpeed = 0.04;
+                this.rockVariance = 15;
             }
         }
 
@@ -138,7 +146,7 @@ module Ldm34.Entity {
 
             if (this.rocking) {
                 this.numberOfTicks++;
-                this.angle = Math.sin(this.numberOfTicks * Baby.BODY_ROCK_SPEED * Math.PI) * Baby.BODY_ROCK_VARIANCE;
+                this.angle = Math.sin(this.numberOfTicks * this.rockSpeed * Math.PI) * this.rockVariance;
                 this.face.angle = Math.sin(this.numberOfTicks * Baby.HEAD_ROCK_SPEED * Math.PI) * Baby.HEAD_ROCK_VARIANCE;
 
             }
