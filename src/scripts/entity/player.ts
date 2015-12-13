@@ -1,6 +1,6 @@
 module Ldm34.Entity {
     export class Player extends Phaser.Sprite {
-        static TRACK_SPEED:number = 300; // PX / s
+        static TRACK_SPEED:number = 400; // PX / s
         static SAFE_ZONE:number = 10;
         game:Game;
         safeZone:Phaser.Rectangle;

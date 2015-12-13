@@ -10,23 +10,22 @@ module Ldm34.Entity {
         shrinkFactor:number;
         face:Phaser.Sprite;
         mouth:Phaser.Sprite;
-        faceHitArea:Phaser.Circle;
-        mouthHitArea:Phaser.Circle;
+        faceHitArea:Phaser.Ellipse;
+        mouthHitArea:Phaser.Ellipse;
         mouthOpen:boolean = true;
         foodSplats:Food[];
         scaleIncrement:number;
         anger:number = 0;
         angerIncrement:number = 1;
 
-        constructor(game:Game) {
-            super(game, 0, 0, 'baby-body');
+        constructor(game:Game, x, y) {
+            super(game, x, y, 'baby-body');
 
             this.anchor.x = 0.5;
             this.anchor.y = 0.75;
 
             //this.pivot.x = 260;
             //this.pivot.y = 515;
-            this.scale.set(Baby.START_SCALE);
             this.scaleIncrement = (1 - Baby.START_SCALE) / Baby.FOOD_LEVEL_REQUIREMENT;
 
             this.face = new Phaser.Sprite(game, 0, -230, 'baby-face');
@@ -39,8 +38,20 @@ module Ldm34.Entity {
             this.mouth.anchor.y = 0.5;
             this.face.addChild(this.mouth);
 
-            this.faceHitArea = new Phaser.Circle(this.x, this.y, 460);
+            this.faceHitArea = new Phaser.Ellipse(0, 0, this.face.width, this.face.height);
+            //this.mouthHitArea = new Phaser.Circle(this.x, this.y, 460);
+
+            this.setScale(1); //Baby.START_SCALE
             this.foodSplats = [];
+        }
+
+        setScale(scale:number) {
+            this.scale.setTo(scale);
+            this.faceHitArea.width = this.face.width * scale;
+            this.faceHitArea.height = this.face.height * scale;
+
+            this.faceHitArea.x = this.x + this.face.x - ((this.face.width * this.face.anchor.x) * scale);
+            this.faceHitArea.y = this.y + this.face.y - ((this.face.height * this.face.anchor.y) * scale);
         }
 
         feed(){
@@ -65,6 +76,7 @@ module Ldm34.Entity {
         startTantrum() {
 
         }
+
 
         update() {
             /*this.foodSplats.forEach(function (food) {

@@ -9,13 +9,7 @@ module Ldm34.State {
                 bg = this.add.sprite(game.world.centerX, 0, 'background');
             bg.anchor.x = 0.5;
 
-            this.baby = new Entity.Baby(game);
-            this.baby.x = game.world.centerX;
-            this.baby.y = game.world.centerY + 300;
-            /*
-             //this.baby.x = 700;
-             //this.baby.y = 750;
-             */
+            this.baby = new Entity.Baby(game, game.world.centerX, game.world.centerY + 300);
             this.add.existing(this.baby);
 
             var chair = game.add.sprite(game.world.centerX, game.height, 'highchair');
@@ -32,7 +26,15 @@ module Ldm34.State {
         }
 
         render() {
-            //this.game.debug.geom(this.baby.faceHitArea,'#cfffff');
+            //this.game.debug.geom(this.baby.faceHitArea,'rgba(33,44,55,0.5)', true, 3);
+
+            var x = this.baby.faceHitArea.x,
+                y = this.baby.faceHitArea.y;
+            this.game.debug.geom(
+                new Phaser.Rectangle(x, y, this.baby.faceHitArea.width, this.baby.faceHitArea.height),
+                'rgba(33,44,55,0.5)'
+            );
+
         }
     }
 }
