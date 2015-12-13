@@ -25,12 +25,15 @@ module Ldm34.Entity {
                 (pos.y >= this.game.input.y - Player.SAFE_ZONE && pos.y <= this.game.input.y + Player.SAFE_ZONE)
             ) {
                 this.body.velocity.setTo(0, 0);
-                this.position.x = this.game.input.x;
-                this.position.y = this.game.input.y + this.game.camera.y;
             }
             else {
                 this.game.physics.arcade.moveToPointer(this, Player.TRACK_SPEED);
             }
+        }
+
+        setCursorPosition() {
+            this.position.x = this.game.input.x;
+            this.position.y = this.game.input.y + this.game.camera.y;
         }
     }
 }

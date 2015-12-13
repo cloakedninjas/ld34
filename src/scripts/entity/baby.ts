@@ -1,6 +1,9 @@
 module Ldm34.Entity {
     export class Baby extends Phaser.Sprite {
-        static TANTRUM_THRESHOLD:number = 30;
+        static ANGER_HAPPY:number = 0;
+        static ANGER_MEDIUM:number = 3;
+        static ANGER_ANGRY:number = 6;
+
         static START_SCALE:number = 0.53;
         static FOOD_VALUE:number = 1;
         static FOOD_LEVEL_REQUIREMENT:number = 20;
@@ -12,6 +15,7 @@ module Ldm34.Entity {
         mouthHitArea:Phaser.Ellipse;
 
         onFull:Phaser.Signal;
+        onAngerChange:Phaser.Signal;
 
         mouthOpen:boolean = true;
         foodSplats:Food[];
@@ -19,6 +23,7 @@ module Ldm34.Entity {
         foodLevel:number = 0;
         anger:number = 0;
         angerIncrement:number = 1;
+        angerDecrement:number = 0.01;
 
         constructor(game:Game, x, y) {
             super(game, x, y, 'baby-body');
@@ -44,6 +49,7 @@ module Ldm34.Entity {
             this.setScale(Baby.START_SCALE);
             this.foodSplats = [];
             this.onFull = new Phaser.Signal();
+            this.onAngerChange = new Phaser.Signal();
         }
 
         setScale(scale:number) {
@@ -71,22 +77,34 @@ module Ldm34.Entity {
 
         addSplat(food:Food) {
             this.foodSplats.push(food);
-            this.anger += this.angerIncrement;
+            var newAngerLevel = this.anger + this.angerIncrement;
+            this.checkAngerLevel(newAngerLevel);
+            this.anger = newAngerLevel;
 
-            if (this.anger >= Baby.TANTRUM_THRESHOLD) {
-                this.startTantrum();
+            if (this.anger === Baby.ANGER_ANGRY) {
+                
             }
         }
 
-        startTantrum() {
+        update() {
+            if (this.anger > 0) {
+                var newAngerLevel = this.anger - this.angerDecrement;
 
+                this.checkAngerLevel(newAngerLevel);
+                this.anger = newAngerLevel;
+            }
         }
 
+        private checkAngerLevel(newAnger:number) {
+            if (
+                (this.anger < Baby.ANGER_MEDIUM && newAnger >= Baby.ANGER_MEDIUM) ||
+                (this.anger < Baby.ANGER_ANGRY && newAnger >= Baby.ANGER_ANGRY) ||
 
-        update() {
-            /*this.foodSplats.forEach(function (food) {
-
-             }, this);*/
+                (this.anger >= Baby.ANGER_MEDIUM && newAnger < Baby.ANGER_MEDIUM) ||
+                (this.anger >= Baby.ANGER_ANGRY && newAnger < Baby.ANGER_ANGRY)
+            ) {
+                this.onAngerChange.dispatch(newAnger);
+            }
         }
     }
 }
