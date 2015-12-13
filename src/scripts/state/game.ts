@@ -12,12 +12,16 @@ module Ldm34.State {
             this.player = new Entity.Player(game);
             this.add.existing(this.player);
 
+
+
             this.input.onDown.add(function () {
-               console.log(1);
-            });
+                var food = new Entity.Food(game, this.player.position.x, this.player.position.y, this.baby);
+                this.world.addChildAt(food, this.world.getChildIndex(this.player));
+            }, this);
         }
 
         render() {
+            //this.game.debug.geom(this.baby.faceHitArea,'#cfffff');
         }
     }
 }

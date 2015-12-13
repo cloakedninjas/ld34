@@ -19,7 +19,10 @@ module Ldm34.Entity {
         }
 
         update() {
-            if (this.position.distance(this.game.input.position) <= Player.SAFE_ZONE) {
+            if (
+                (this.x >= this.game.input.x - Player.SAFE_ZONE && this.x <= this.game.input.x + Player.SAFE_ZONE) &&
+                (this.y >= this.game.input.y - Player.SAFE_ZONE && this.y <= this.game.input.y + Player.SAFE_ZONE)
+            ) {
                 this.body.velocity.setTo(0, 0);
                 this.position.x = this.game.input.x;
                 this.position.y = this.game.input.y;
@@ -27,17 +30,6 @@ module Ldm34.Entity {
             else {
                 this.game.physics.arcade.moveToPointer(this, Player.TRACK_SPEED);
             }
-
-            /*if (
-                (this.x >= this.game.input.x - spread && this.x <= this.game.input.x - spread) &&
-                (this.y >= this.game.input.y + spread && this.y <= this.game.input.y - spread)
-            ) {
-                this.body.velocity.setTo(0, 0);
-            }
-            else {
-                this.game.physics.arcade.moveToPointer(this, Player.TRACK_SPEED);
-
-            }*/
         }
     }
 }
