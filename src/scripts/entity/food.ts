@@ -51,7 +51,5 @@ module Ldm34.Entity {
             }
         }
 
-
-
     }
 }

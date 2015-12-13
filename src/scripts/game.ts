@@ -5,8 +5,8 @@ module Ldm34 {
 
         constructor() {
             super({
-                width: window.innerWidth,
-                height: window.innerHeight,
+                width: 800,
+                height: 600,
                 renderer: Phaser.CANVAS
             });
 
