@@ -7,6 +7,7 @@ module Ldm34.Entity {
         static START_SCALE:number = 0.53;
         static FOOD_VALUE:number = 1;
         static FOOD_LEVEL_REQUIREMENT:number = 20;
+        static ROCK_SPEED:number = 0.02;
 
         game:Game;
         face:Phaser.Sprite;
@@ -17,6 +18,8 @@ module Ldm34.Entity {
         onFull:Phaser.Signal;
         onAngerChange:Phaser.Signal;
 
+        rocking:boolean = false;
+        numberOfTicks:number = 0;
         mouthOpen:boolean = true;
         foodSplats:Food[];
         scaleIncrement:number;
@@ -67,12 +70,46 @@ module Ldm34.Entity {
             this.mouthHitArea.y = this.y + (this.face.y * scale) + (this.mouth.y * scale) - ((this.mouth.height * this.mouth.anchor.y) * scale);
         }
 
-        feed() {
-            this.foodLevel += Baby.FOOD_VALUE;
-
-            if (this.foodLevel === Baby.FOOD_LEVEL_REQUIREMENT) {
-                this.onFull.dispatch();
+        checkFoodLanded(food:Food) {
+            console.log('poop');
+            if (this.mouthOpen && this.mouthHitArea.contains(food.x, food.y)) {
+                food.remove();
+                this.feed(food);
             }
+            else if (this.faceHitArea.contains(food.x, food.y)) {
+                food.splat();
+                this.addSplat(food);
+            }
+            else {
+                food.remove();
+            }
+        }
+
+        feed(food:Food) {
+            if (this.mouthOpen) {
+                this.foodLevel += Baby.FOOD_VALUE;
+
+                if (this.foodLevel === Baby.FOOD_LEVEL_REQUIREMENT) {
+                    this.onFull.dispatch();
+                }
+            }
+            else {
+                this.addSplat(food);
+            }
+        }
+
+        rock() {
+            this.rocking = true;
+        }
+
+        openMouth() {
+            this.mouthOpen = true;
+            this.mouth.loadTexture('baby-mouth');
+        }
+
+        closeMouth() {
+            this.mouthOpen = false;
+            this.mouth.loadTexture('baby-mouth-closed');
         }
 
         addSplat(food:Food) {
@@ -82,7 +119,7 @@ module Ldm34.Entity {
             this.anger = newAngerLevel;
 
             if (this.anger === Baby.ANGER_ANGRY) {
-                
+
             }
         }
 
@@ -92,6 +129,12 @@ module Ldm34.Entity {
 
                 this.checkAngerLevel(newAngerLevel);
                 this.anger = newAngerLevel;
+            }
+
+            if (this.rocking) {
+                this.numberOfTicks++;
+                this.angle = Math.sin(this.numberOfTicks * Baby.ROCK_SPEED * Math.PI) * 10;
+
             }
         }
 

@@ -34,17 +34,7 @@ module Ldm34.Entity {
                     this.body.velocity.setTo(0, 0);
                     this.flying = false;
 
-                    if (this.baby.mouthHitArea.contains(this.x, this.y)) {
-                        this.remove();
-                        this.baby.feed();
-                    }
-                    else if (this.baby.faceHitArea.contains(this.x, this.y)) {
-                        this.splat();
-                        this.baby.addSplat(this);
-                    }
-                    else {
-                        this.remove();
-                    }
+                    this.baby.checkFoodLanded(this);
                 }
             }
         }

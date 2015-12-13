@@ -7,7 +7,8 @@ module Ldm34.State {
             this.load.image('baby-face', 'assets/images/baby-face.png');
             this.load.image('baby-body', 'assets/images/baby-body.png');
             this.load.image('baby-mouth', 'assets/images/baby-mouth.png');
-            this.load.image('crosshair', 'assets/images/crosshair.svg');
+            this.load.image('baby-mouth-closed', 'assets/images/baby-mouth-closed.png');
+            this.load.image('crosshair', 'assets/images/crosshair.png');
             this.load.image('background', 'assets/images/background-nursery.png');
             this.load.image('highchair', 'assets/images/highchair.png');
             this.load.image('pea', 'assets/images/food-pea.png');
