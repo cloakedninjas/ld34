@@ -4,7 +4,9 @@ module Ldm34.State {
 
         preload() {
             this.loadingBar = new Entity.PreloadBar(this.game);
-            this.load.image('phaser-logo', 'assets/images/phaser-logo.png');
+            this.load.image('baby-face', 'assets/images/baby_face.png');
+            this.load.image('crosshair', 'assets/images/crosshair.svg');
+            this.load.image('pea', 'assets/images/pea.png');
         }
 
         create() {

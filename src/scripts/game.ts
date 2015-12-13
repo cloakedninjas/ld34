@@ -7,7 +7,7 @@ module Ldm34 {
             super({
                 width: window.innerWidth,
                 height: window.innerHeight,
-                renderer: Phaser.AUTO
+                renderer: Phaser.CANVAS
             });
 
             this.state.add('preloader', State.Preloader, true);
