@@ -129,7 +129,7 @@ module Ldm34.Entity {
             var duration = this.mouthOpen ? Lib.random(1000, 4000) : Lib.random(500, 3000);
             this.mouthTimer = this.game.time.events.add(duration, this.toggleMouth, this);
 
-            if (!this.mouthOpen) {
+            if (this.mouthOpen) {
                 this.mouthFood.forEach(function (food:Food) {
                     food.destroy();
                 }, this);
