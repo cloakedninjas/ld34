@@ -8,7 +8,7 @@ module Ldm34.Entity {
         static TYPE_HOUSE:number = 5;
         static TYPE_PLANE:number = 6;
         static TYPE_SATELLITE:number = 7;
-        static TYPE_MOON:number = 7;
+        static TYPE_MOON:number = 8;
         static TYPE_PLANET:number = 9;
         static TYPE_STAR:number = 10;
         static TYPE_GALAXY:number = 11;
