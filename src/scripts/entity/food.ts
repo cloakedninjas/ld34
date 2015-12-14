@@ -2,6 +2,11 @@ module Ldm34.Entity {
     export class Food extends Phaser.Sprite {
         static FLIGHT_SPEED:number = 500;
         static TYPE_PEA:number = 1;
+        static TYPE_WHOLE_CARROT:number = 2;
+        static TYPE_WATERMELON:number = 3;
+        static TYPE_COW:number = 4;
+        static TYPE_HOUSE:number = 5;
+
         game:Game;
         baby:Baby;
         destination:Phaser.Point;
@@ -20,6 +25,18 @@ module Ldm34.Entity {
             switch (this.foodType) {
                 case Food.TYPE_PEA:
                     this.loadTexture('pea');
+                    break;
+
+                case Food.TYPE_WHOLE_CARROT:
+                    this.loadTexture('carrot');
+                    break;
+
+                case Food.TYPE_WATERMELON:
+                    this.loadTexture('watermelon');
+                    break;
+
+                case Food.TYPE_COW:
+                    this.loadTexture('cow');
                     break;
             }
 
@@ -41,15 +58,14 @@ module Ldm34.Entity {
 
         splat() {
             this.loadTexture(this.key + '-splat');
-            return;
 
-            var tween = this.game.tweens.create(this).to({
+            /*var tween = this.game.tweens.create(this).to({
                 alpha: 0
             }, 1000, Phaser.Easing.Linear.None, true, 1000);
 
             tween.onComplete.add(function () {
                 this.destroy();
-            }, this);
+            }, this);*/
         }
 
         remove() {

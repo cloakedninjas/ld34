@@ -14,6 +14,12 @@ module Ldm34.State {
             this.load.image('highchair', 'assets/images/highchair.png');
             this.load.image('pea', 'assets/images/food-pea.png');
             this.load.image('pea-splat', 'assets/images/food-pea-splat.png');
+            this.load.image('carrot', 'assets/images/food-carrot.png');
+            this.load.image('carrot-splat', 'assets/images/food-carrot-splat.png');
+            this.load.image('watermelon', 'assets/images/food-watermelon.png');
+            this.load.image('watermelon-splat', 'assets/images/food-watermelon-splat.png');
+            this.load.image('cow', 'assets/images/food-cow.png');
+            this.load.image('cow-splat', 'assets/images/food-cow-splat.png');
             this.load.image('grump-happy', 'assets/images/grump-happy.png');
             this.load.image('grump-medium', 'assets/images/grump-medium.png');
             this.load.image('grump-angry', 'assets/images/grump-angry.png');

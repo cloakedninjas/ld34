@@ -1,5 +1,4 @@
 module Ldm34.State {
-    import Baby = Ldm34.Entity.Baby;
     export class Game extends Phaser.State {
         static LEVEL_COUNT:number = 11;
         static ROUNDS_PER_LEVEL:number = 3;
@@ -14,6 +13,7 @@ module Ldm34.State {
         foodMeter:Entity.FoodMeter;
         gameTimer:Entity.GameTimer;
         roundTimesPerLevel:number[];
+        foodTypes:number[];
 
         create() {
             var game = this.game,
@@ -23,6 +23,12 @@ module Ldm34.State {
             bg.anchor.x = 0.5;
 
             this.roundTimesPerLevel = [30, 28, 25, 22, 20, 20, 19, 18, 18, 17, 15];
+            this.foodTypes = [
+                Entity.Food.TYPE_PEA,
+                Entity.Food.TYPE_WHOLE_CARROT,
+                Entity.Food.TYPE_WATERMELON,
+                Entity.Food.TYPE_COW
+            ];
 
             game.world.setBounds(0, 0, game.width, totalHeight);
             game.camera.y = totalHeight - game.height;
@@ -76,7 +82,8 @@ module Ldm34.State {
 
         shootFood() {
             if (!this.roundTransitioning) {
-                var food = new Entity.Food(this.game, this.player.position.x, this.player.position.y, this.baby);
+                var foodType = this.foodTypes[this.levelCounter - 1],
+                    food = new Entity.Food(this.game, this.player.position.x, this.player.position.y, this.baby, foodType);
                 this.world.addChildAt(food, this.world.getChildIndex(this.player));
             }
         }
