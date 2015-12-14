@@ -3,7 +3,11 @@ module Ldm34.State {
         loadingBar:Entity.PreloadBar;
 
         preload() {
+            this.game.add.sprite(0, 0, 'title');
             this.loadingBar = new Entity.PreloadBar(this.game);
+
+            this.load.spritesheet('play-btn', 'assets/images/play-btn.png', 186, 110, 2);
+
             this.load.image('baby-face', 'assets/images/baby-face.png');
             this.load.image('baby-tantrum-face', 'assets/images/baby-tantrum-face.png');
             this.load.image('baby-body', 'assets/images/baby-body.png');
@@ -36,7 +40,7 @@ module Ldm34.State {
         }
 
         startGame() {
-            this.game.state.start('game', true);
+            this.game.state.start('title', true);
         }
 
         loadUpdate() {
