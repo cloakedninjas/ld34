@@ -93,6 +93,24 @@ module Ldm34.State {
              new Phaser.Rectangle(x, y, w, h),
              'rgba(33,44,55,0.5)'
              );*/
+
+            var points = <Phaser.Point[]>this.baby.mouthHitArea.points;
+
+            var ctx = this.game.context;
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'red';
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+            ctx.beginPath();
+            ctx.moveTo((points[0].x + 0.5) - this.game.camera.x, (points[0].y + 0.5) - this.game.camera.y);
+
+            points.forEach(function (point:Phaser.Point) {
+                ctx.lineTo((point.x + 0.5) - this.game.camera.x, (point.y + 0.5) - this.game.camera.y);
+            }, this);
+
+            ctx.closePath();
+            ctx.fill();
+
+            //debugger;
         }
 
         shootFood() {
@@ -185,8 +203,6 @@ module Ldm34.State {
         private handleTimeLimitHit() {
             this.removeGameControls();
             this.baby.throwTantrum();
-            this.baby.onAngerChange.remove(this.handleAngerChange);
-            this.gameOver();
         }
 
         private gameOver() {
