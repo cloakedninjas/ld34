@@ -29,7 +29,6 @@ module Ldm34.Entity {
         rockSpeed:number = Baby.BODY_ROCK_SPEED;
         rockVariance:number = Baby.BODY_ROCK_VARIANCE;
         rocking:boolean = true;
-        rockTimer:Phaser.TimerEvent;
         mouthTimer:Phaser.TimerEvent;
         numberOfTicks:number = 0;
         mouthOpen:boolean = true;
@@ -64,7 +63,6 @@ module Ldm34.Entity {
             this.onEat = new Phaser.Signal();
             this.onFull = new Phaser.Signal();
             this.onAngerChange = new Phaser.Signal();
-            //this.rockTimer = game.time.events.add(Lib.random(2000, 5000), this.rock, this);
             this.mouthTimer = game.time.events.add(Lib.random(2000, 5000), this.toggleMouth, this);
         }
 
@@ -116,13 +114,6 @@ module Ldm34.Entity {
             }
         }
 
-        rock() {
-            this.rocking = !this.rocking;
-
-            var rockMax = this.rocking ? 10000 : 5000;
-            this.rockTimer = this.game.time.events.add(Lib.random(2000, rockMax), this.rock, this);
-        }
-
         toggleMouth() {
             this.mouthOpen = !this.mouthOpen;
             this.mouth.loadTexture(this.mouthOpen ? 'baby-mouth' : 'baby-mouth-closed');
@@ -150,13 +141,7 @@ module Ldm34.Entity {
             this.anger = newAngerLevel;
 
             if (this.anger >= Baby.ANGER_ANGRY) {
-                this.game.time.events.remove(this.mouthTimer);
-                this.game.time.events.remove(this.rockTimer);
-
-                this.mouthOpen = true;
-                this.rocking = true;
-                this.rockSpeed = 0.04;
-                this.rockVariance = 15;
+                this.throwTantrum();
             }
         }
 
@@ -173,6 +158,19 @@ module Ldm34.Entity {
                 x: scale,
                 y: scale
             }, Baby.GROW_DURATION, Phaser.Easing.Sinusoidal.Out, true);
+        }
+
+        throwTantrum() {
+            this.face.loadTexture('baby-tantrum-face');
+            this.anger = Baby.ANGER_ANGRY;
+            this.angerDecrement = 0;
+            this.game.time.events.remove(this.mouthTimer);
+            this.mouthOpen = true;
+            this.mouth.loadTexture('baby-mouth');
+            this.rocking = true;
+            this.rockSpeed = 0.04;
+            this.rockVariance = 15;
+            this.onAngerChange.dispatch(this.anger);
         }
 
         update() {

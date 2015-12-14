@@ -5,6 +5,7 @@ module Ldm34.State {
         preload() {
             this.loadingBar = new Entity.PreloadBar(this.game);
             this.load.image('baby-face', 'assets/images/baby-face.png');
+            this.load.image('baby-tantrum-face', 'assets/images/baby-tantrum-face.png');
             this.load.image('baby-body', 'assets/images/baby-body.png');
             this.load.image('baby-mouth', 'assets/images/baby-mouth.png');
             this.load.image('baby-mouth-closed', 'assets/images/baby-mouth-closed.png');
@@ -19,6 +20,7 @@ module Ldm34.State {
             this.load.image('food-meter-under', 'assets/images/foodmeter-under.png');
             this.load.image('food-meter-fork', 'assets/images/foodmeter-fork.png');
             this.load.image('food-meter-bar', 'assets/images/foodmeter-green.png');
+            this.load.image('clock', 'assets/images/clock.png');
         }
 
         create() {

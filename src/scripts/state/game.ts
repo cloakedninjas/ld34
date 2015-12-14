@@ -12,6 +12,7 @@ module Ldm34.State {
         roundTransitioning:boolean = false;
         grumpLevel:Phaser.Sprite;
         foodMeter:Entity.FoodMeter;
+        gameTimer:Entity.GameTimer;
 
         create() {
             var game = this.game,
@@ -39,16 +40,19 @@ module Ldm34.State {
             this.grumpLevel = new Phaser.Sprite(game, 20, 20, 'grump-happy');
             this.uiGroup.add(this.grumpLevel);
 
-            this.foodMeter = new Entity.FoodMeter(game, this.grumpLevel.x + this.grumpLevel.width + 20  , this.grumpLevel.y);
+            this.gameTimer = new Entity.GameTimer(game, this.grumpLevel.x + this.grumpLevel.width + 20  , this.grumpLevel.y);
+            this.uiGroup.add(this.gameTimer);
+
+            this.foodMeter = new Entity.FoodMeter(game, this.gameTimer.x + this.gameTimer.width + 20  , this.gameTimer.y);
             this.uiGroup.add(this.foodMeter);
 
             this.input.onDown.add(this.shootFood, this);
-
             this.baby.onEat.add(function () {
                 this.foodMeter.setFill(this.baby.foodLevel / Entity.Baby.FOOD_LEVEL_REQUIREMENT);
             }, this);
             this.baby.onFull.add(this.handleBabyFull, this);
             this.baby.onAngerChange.add(this.handleAngerChange, this);
+            this.gameTimer.onTimeLimitHit.add(this.handleTimeLimitHit, this);
         }
 
         render() {
@@ -80,6 +84,7 @@ module Ldm34.State {
             this.roundCounter++;
             this.baby.foodLevel = 0;
             this.foodMeter.setFill(0);
+            this.gameTimer.start(15000);
 
             if (this.roundCounter > Game.ROUNDS_PER_LEVEL) {
                 this.beginNewLevel();
@@ -140,6 +145,12 @@ module Ldm34.State {
             else {
                 this.grumpLevel.loadTexture('grump-happy');
             }
+        }
+
+        private handleTimeLimitHit() {
+            this.roundTransitioning = true;
+            this.player.visible = false;
+            this.baby.throwTantrum();
         }
     }
 }
