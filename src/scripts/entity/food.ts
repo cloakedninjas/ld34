@@ -41,6 +41,7 @@ module Ldm34.Entity {
 
         splat() {
             this.loadTexture(this.key + '-splat');
+            return;
 
             var tween = this.game.tweens.create(this).to({
                 alpha: 0

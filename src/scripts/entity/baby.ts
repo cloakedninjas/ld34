@@ -56,7 +56,8 @@ module Ldm34.Entity {
             this.faceHitArea = new Phaser.Ellipse(0, 0, 1, 1);
             this.mouthHitArea = new Phaser.Ellipse(0, 0, 1, 1);
 
-            this.setScale(Baby.START_SCALE);
+            this.setScale(1);
+            //this.setScale(Baby.START_SCALE);
             this.foodSplats = [];
             this.onFull = new Phaser.Signal();
             this.onAngerChange = new Phaser.Signal();
@@ -120,7 +121,18 @@ module Ldm34.Entity {
         }
 
         addSplat(food:Food) {
+            this.game.world.remove(food);
+            this.face.addChild(food);
             this.foodSplats.push(food);
+
+            food.x -= this.x;
+            food.y -= this.y;
+
+            food.y -= this.face.y * ((this.scale.x * 2) - 1);
+
+            food.scale.x /= this.scale.x;
+            food.scale.y /= this.scale.y;
+
             var newAngerLevel = this.anger + this.angerIncrement;
             this.checkAngerLevel(newAngerLevel);
             this.anger = newAngerLevel;
@@ -136,6 +148,13 @@ module Ldm34.Entity {
             }
         }
 
+        /*setFoodScale() {
+            this.foodSplats.forEach(function (food:Food) {
+                food.scale.x /= this.scale.x;
+                food.scale.y /= this.scale.y;
+            });
+        }*/
+
         update() {
             if (this.anger > 0) {
                 var newAngerLevel = this.anger - this.angerDecrement;
@@ -145,10 +164,9 @@ module Ldm34.Entity {
             }
 
             if (this.rocking) {
-                this.numberOfTicks++;
-                this.angle = Math.sin(this.numberOfTicks * this.rockSpeed * Math.PI) * this.rockVariance;
-                this.face.angle = Math.sin(this.numberOfTicks * Baby.HEAD_ROCK_SPEED * Math.PI) * Baby.HEAD_ROCK_VARIANCE;
-
+                //this.numberOfTicks++;
+                //this.angle = Math.sin(this.numberOfTicks * this.rockSpeed * Math.PI) * this.rockVariance;
+                //this.face.angle = Math.sin(this.numberOfTicks * Baby.HEAD_ROCK_SPEED * Math.PI) * Baby.HEAD_ROCK_VARIANCE;
             }
         }
 
