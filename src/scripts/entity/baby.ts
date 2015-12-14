@@ -128,10 +128,13 @@ module Ldm34.Entity {
             food.x -= this.x;
             food.y -= this.y;
 
-            food.y -= this.face.y * ((this.scale.x * 2) - 1);
+            var scale = this.scale.x;
 
-            food.scale.x /= this.scale.x;
-            food.scale.y /= this.scale.y;
+            food.x -= this.face.x * scale;
+            food.y -= this.face.y * scale;
+
+            food.x /= scale;
+            food.y /= scale;
 
             var newAngerLevel = this.anger + this.angerIncrement;
             this.checkAngerLevel(newAngerLevel);
