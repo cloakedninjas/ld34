@@ -1,8 +1,8 @@
 module Ldm34.Entity {
     export class Baby extends Phaser.Sprite {
         static ANGER_HAPPY:number = 0;
-        static ANGER_MEDIUM:number = 3;
-        static ANGER_ANGRY:number = 6;
+        static ANGER_MEDIUM:number = 20;
+        static ANGER_ANGRY:number = 40;
 
         static SCALE_ROUND_1:number = 0.53;
         static SCALE_ROUND_2:number = 0.7;
@@ -33,11 +33,12 @@ module Ldm34.Entity {
         numberOfTicks:number = 0;
         mouthOpen:boolean = true;
         foodSplats:Food[];
+        mouthFood:Food[];
         scaleIncrement:number;
         foodLevel:number = 0;
         anger:number = 0;
         angerIncrement:number = 1;
-        angerDecrement:number = 0.01;
+        angerDecrement:number = 0; //0.01;
 
         constructor(game:Game, x, y) {
             super(game, x, y, 'baby-body');
@@ -60,6 +61,7 @@ module Ldm34.Entity {
 
             this.setScale(Baby.SCALE_ROUND_1);
             this.foodSplats = [];
+            this.mouthFood = [];
             this.onEat = new Phaser.Signal();
             this.onFull = new Phaser.Signal();
             this.onAngerChange = new Phaser.Signal();
@@ -87,13 +89,19 @@ module Ldm34.Entity {
         }
 
         checkFoodLanded(food:Food) {
-            if (this.mouthOpen && this.mouthHitArea.contains(food.x, food.y)) {
+            var hitMouth = this.mouthHitArea.contains(food.x, food.y);
+
+            if (this.mouthOpen && hitMouth) {
                 food.remove();
                 this.feed(food);
             }
             else if (this.faceHitArea.contains(food.x, food.y)) {
                 food.splat();
                 this.addSplat(food);
+
+                if (hitMouth) {
+                    this.mouthFood.push(food);
+                }
             }
             else {
                 food.remove();
@@ -120,6 +128,14 @@ module Ldm34.Entity {
 
             var duration = this.mouthOpen ? Lib.random(1000, 4000) : Lib.random(500, 3000);
             this.mouthTimer = this.game.time.events.add(duration, this.toggleMouth, this);
+
+            if (!this.mouthOpen) {
+                this.mouthFood.forEach(function (food:Food) {
+                    food.destroy();
+                }, this);
+
+                this.mouthFood = [];
+            }
         }
 
         addSplat(food:Food) {

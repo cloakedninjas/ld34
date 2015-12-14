@@ -31,7 +31,7 @@ module Ldm34.State {
         }
 
         private handleCreditClick(text, pointer, credit) {
-            document.location.href = 'https://twitter.com/' + credit.replace('@', '');
+            window.open('https://twitter.com/' + credit.replace('@', ''), '_blank');
         }
     }
 }

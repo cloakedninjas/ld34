@@ -41,13 +41,13 @@ module Ldm34.State {
                 'Baby',
                 'Big Baby',
                 'Bigger Baby',
-                '??',
-                '??',
                 'My Big Strong Baby',
-                '??',
-                '??',
+                'Mega Baby',
+                'Ultra Baby',
+                'Bbbbbaby',
+                'Super Mega Ultra Baby',
                 'Baby: Eater of Worlds',
-                '??',
+                'Babygeddon',
                 'Baby: Eater of Existence'
             ];
 
@@ -92,7 +92,7 @@ module Ldm34.State {
         }
 
         render() {
-            //this.game.debug.geom(this.baby.faceHitArea,'rgba(33,44,55,0.5)', true, 3);
+            //this.game.debug.text(this.baby.anger.toString(), 20, 20);
 
             /*var x = this.baby.mouthHitArea.x,
              y = this.baby.mouthHitArea.y,
@@ -102,22 +102,6 @@ module Ldm34.State {
              new Phaser.Rectangle(x, y, w, h),
              'rgba(33,44,55,0.5)'
              );*/
-
-            /*var points = <Phaser.Point[]>this.baby.mouthHitArea.points;
-
-            var ctx = this.game.context;
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = 'red';
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-            ctx.beginPath();
-            ctx.moveTo((points[0].x + 0.5) - this.game.camera.x, (points[0].y + 0.5) - this.game.camera.y);
-
-            points.forEach(function (point:Phaser.Point) {
-                ctx.lineTo((point.x + 0.5) - this.game.camera.x, (point.y + 0.5) - this.game.camera.y);
-            }, this);
-
-            ctx.closePath();
-            ctx.fill();*/
         }
 
         shootFood() {
