@@ -54,14 +54,14 @@ module Ldm34.State {
         render() {
             //this.game.debug.geom(this.baby.faceHitArea,'rgba(33,44,55,0.5)', true, 3);
 
-            var x = this.baby.mouthHitArea.x,
+            /*var x = this.baby.mouthHitArea.x,
                 y = this.baby.mouthHitArea.y,
                 w = this.baby.mouthHitArea.width,
                 h = this.baby.mouthHitArea.height;
             this.game.debug.geom(
                 new Phaser.Rectangle(x, y, w, h),
                 'rgba(33,44,55,0.5)'
-            );
+            );*/
         }
 
         shootFood() {
@@ -102,6 +102,7 @@ module Ldm34.State {
         beginNewLevel() {
             this.roundCounter = 1;
             this.levelCounter++;
+            this.baby.clearSplats();
 
             var game = this.game,
                 y = (game.height * Game.LEVEL_COUNT) - this.levelCounter * game.height,

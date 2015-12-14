@@ -28,7 +28,7 @@ module Ldm34.Entity {
 
         rockSpeed:number = Baby.BODY_ROCK_SPEED;
         rockVariance:number = Baby.BODY_ROCK_VARIANCE;
-        rocking:boolean = false;
+        rocking:boolean = true;
         rockTimer:Phaser.TimerEvent;
         mouthTimer:Phaser.TimerEvent;
         numberOfTicks:number = 0;
@@ -64,7 +64,7 @@ module Ldm34.Entity {
             this.onEat = new Phaser.Signal();
             this.onFull = new Phaser.Signal();
             this.onAngerChange = new Phaser.Signal();
-            this.rockTimer = game.time.events.add(Lib.random(2000, 5000), this.rock, this);
+            //this.rockTimer = game.time.events.add(Lib.random(2000, 5000), this.rock, this);
             this.mouthTimer = game.time.events.add(Lib.random(2000, 5000), this.toggleMouth, this);
         }
 
@@ -158,6 +158,13 @@ module Ldm34.Entity {
                 this.rockSpeed = 0.04;
                 this.rockVariance = 15;
             }
+        }
+
+        clearSplats() {
+            this.foodSplats.forEach(function (food:Food, i:number) {
+                food.destroy();
+            }, this);
+            this.foodSplats = [];
         }
 
         grow(scale:number) {
