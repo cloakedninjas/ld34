@@ -19,7 +19,7 @@ module Ldm34.Entity {
 
             this.add(new Phaser.Sprite(game, 0, 0, 'food-meter-under'));
             this.add(this.barImage);
-            this.add(new Phaser.Sprite(game, 0, 0, 'food-meter-fork'));
+            this.add(new Phaser.Sprite(game, 2, 2, 'food-meter-fork'));
             this.setFill(0);
         }
 
