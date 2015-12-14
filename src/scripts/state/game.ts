@@ -220,7 +220,9 @@ module Ldm34.State {
 
         private gameOver() {
             this.gameTimer.running = false;
-            new Entity.GameOver(this.game, this.roundNames[this.levelCounter - 1]);
+
+            var levelCounter = Math.min(this.levelCounter - 1, 11);
+            new Entity.GameOver(this.game, this.roundNames[levelCounter]);
         }
     }
 }
