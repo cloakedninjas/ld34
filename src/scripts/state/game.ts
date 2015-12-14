@@ -23,7 +23,7 @@ module Ldm34.State {
 
             bg.anchor.x = 0.5;
 
-            this.roundTimesPerLevel = [30, 28, 25, 22, 20, 20, 19, 18, 18, 17, 15];
+            this.roundTimesPerLevel = [20, 18, 16, 15, 14, 13, 12, 11, 10, 9, 8];
             this.foodTypes = [
                 Entity.Food.TYPE_PEA,
                 Entity.Food.TYPE_WHOLE_CARROT,
