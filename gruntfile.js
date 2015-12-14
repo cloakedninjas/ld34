@@ -31,6 +31,10 @@ module.exports = function (grunt) {
                     {
                         src: 'bower_components/phaser/build/custom/phaser-arcade-physics.js',
                         dest: 'public/vendor/phaser/phaser.js'
+                    },
+                    {
+                        src: 'bower_components/webfontloader/webfontloader.js',
+                        dest: 'public/vendor/webfontloader/webfontloader.js'
                     }
                 ]
             }

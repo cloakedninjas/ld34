@@ -31,6 +31,12 @@ module Ldm34.State {
             this.load.image('food-meter-fork', 'assets/images/foodmeter-fork.png');
             this.load.image('food-meter-bar', 'assets/images/foodmeter-green.png');
             this.load.image('clock', 'assets/images/clock.png');
+
+            WebFont.load(<WebFont.Config>{
+                google: {
+                    families: ['Montserrat', 'Righteous']
+                }
+            });
         }
 
         create() {

@@ -65,6 +65,7 @@ module Ldm34.State {
             this.gameTimer.onTimeLimitHit.add(this.handleTimeLimitHit, this);
 
             this.gameTimer.start(this.roundTimesPerLevel[0]);
+            this.roundTransitioning = false;
         }
 
         render() {
@@ -153,10 +154,11 @@ module Ldm34.State {
         }
 
         private handleAngerChange(angerLevel:number) {
-            if (angerLevel>= Entity.Baby.ANGER_ANGRY) {
+            if (angerLevel >= Entity.Baby.ANGER_ANGRY) {
                 this.removeGameControls();
                 this.baby.onAngerChange.remove(this.handleAngerChange);
                 this.grumpLevel.loadTexture('grump-angry');
+                this.gameOver();
             }
             else if (angerLevel >= Entity.Baby.ANGER_MEDIUM) {
                 this.grumpLevel.loadTexture('grump-medium');
@@ -169,6 +171,13 @@ module Ldm34.State {
         private handleTimeLimitHit() {
             this.removeGameControls();
             this.baby.throwTantrum();
+            this.baby.onAngerChange.remove(this.handleAngerChange);
+            this.gameOver();
+        }
+
+        private gameOver() {
+            this.gameTimer.running = false;
+            new Entity.GameOver(this.game, 'Something');
         }
     }
 }

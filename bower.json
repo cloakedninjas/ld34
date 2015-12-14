@@ -23,6 +23,7 @@
     "tests"
   ],
   "dependencies": {
-    "phaser": "~2.4.4"
+    "phaser": "~2.4.4",
+    "webfontloader": "~1.6.16"
   }
 }
