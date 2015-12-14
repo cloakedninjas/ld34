@@ -27,6 +27,7 @@ module Ldm34.Entity {
 
             this.anchor.x = 0.5;
             this.anchor.y = 0.5;
+            this.rotation = Math.random() * PIXI.PI_2;
 
             switch (this.foodType) {
                 case Food.TYPE_PEA:
@@ -80,6 +81,7 @@ module Ldm34.Entity {
         update() {
             if (this.flying) {
                 this.game.physics.arcade.moveToXY(this, this.destination.x, this.destination.y, Food.FLIGHT_SPEED);
+                this.rotation += 0.1;
 
                 if (this.position.distance(this.destination) <= 10) {
                     this.body.velocity.setTo(0, 0);
