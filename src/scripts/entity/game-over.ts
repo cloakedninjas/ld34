@@ -1,10 +1,9 @@
 module Ldm34.Entity {
-    export class GameOver extends Phaser.Group {
+    export class GameOver extends Phaser.Sprite {
         game:Game;
 
         constructor(game:Game, level:string) {
-            super(game);
-            this.game = game;
+            super(game, 0, 0);
 
             var bmd = new Phaser.BitmapData(game, 'game-over', game.width, game.height),
                 ctx = bmd.ctx;
@@ -26,14 +25,24 @@ module Ldm34.Entity {
             ctx.font = 'bold 30px Montserrat';
             ctx.fillText('You reached: ' + level, game.world.centerX, 320);
 
-            var sprite = new Phaser.Sprite(game, 0, 0, bmd);
-            this.add(sprite);
+            this.loadTexture(bmd);
 
-            var btn = new Phaser.Button(game, game.world.centerX, 435, 'play-btn', this.handleButtonClick, this, null, 0, 1, 0);
-            btn.anchor.x = 0.5;
-            this.add(btn);
+            var buttonSprite = new Phaser.Sprite(game, game.world.centerX, 435);
+            bmd = new Phaser.BitmapData(game, 'game-over', 160, 66);
+            ctx = bmd.ctx;
 
-            this.fixedToCamera = true;
+            ctx.fillStyle = '#ed1c24';
+            ctx.fillRect(0, 0, bmd.width, bmd.height);
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 32px Montserrat';
+            ctx.fillText('REPLAY?', bmd.width / 2, 44);
+
+            buttonSprite.loadTexture(bmd);
+            buttonSprite.anchor.x = 0.5;
+            buttonSprite.inputEnabled = true;
+            buttonSprite.events.onInputDown.add(this.handleButtonClick, this);
+            this.addChild(buttonSprite);
         }
 
         private handleButtonClick() {

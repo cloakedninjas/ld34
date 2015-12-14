@@ -222,7 +222,9 @@ module Ldm34.State {
             this.gameTimer.running = false;
 
             var levelCounter = Math.min(this.levelCounter - 1, 11);
-            new Entity.GameOver(this.game, this.roundNames[levelCounter]);
+            var go = new Entity.GameOver(this.game, this.roundNames[levelCounter]);
+            go.fixedToCamera = true;
+            this.add.existing(go);
         }
     }
 }
