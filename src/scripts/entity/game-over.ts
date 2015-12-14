@@ -17,7 +17,7 @@ module Ldm34.Entity {
             ctx.font = '100px Righteous';
             ctx.fillText('GAME OVER!', game.world.centerX, 230);
 
-            var width = 257;
+            var width = 300;
             ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.fillRect(game.world.centerX - width, 290, width * 2, 38);
 

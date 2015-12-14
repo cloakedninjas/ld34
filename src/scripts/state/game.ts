@@ -14,6 +14,7 @@ module Ldm34.State {
         gameTimer:Entity.GameTimer;
         roundTimesPerLevel:number[];
         foodTypes:number[];
+        roundNames:string[];
 
         create() {
             var game = this.game,
@@ -28,6 +29,19 @@ module Ldm34.State {
                 Entity.Food.TYPE_WHOLE_CARROT,
                 Entity.Food.TYPE_WATERMELON,
                 Entity.Food.TYPE_COW
+            ];
+            this.roundNames = [
+                'Baby',
+                'Big Baby',
+                'Bigger Baby',
+                '??',
+                '??',
+                'My Big Strong Baby',
+                '??',
+                '??',
+                'Baby: Eater of Worlds',
+                '??',
+                'Baby: Eater of Existence'
             ];
 
             game.world.setBounds(0, 0, game.width, totalHeight);
@@ -50,10 +64,10 @@ module Ldm34.State {
             this.grumpLevel = new Phaser.Sprite(game, 20, 20, 'grump-happy');
             this.uiGroup.add(this.grumpLevel);
 
-            this.gameTimer = new Entity.GameTimer(game, this.grumpLevel.x + this.grumpLevel.width + 20  , this.grumpLevel.y);
+            this.gameTimer = new Entity.GameTimer(game, this.grumpLevel.x + this.grumpLevel.width + 20, this.grumpLevel.y);
             this.uiGroup.add(this.gameTimer);
 
-            this.foodMeter = new Entity.FoodMeter(game, this.gameTimer.x + this.gameTimer.width + 20  , this.gameTimer.y);
+            this.foodMeter = new Entity.FoodMeter(game, this.gameTimer.x + this.gameTimer.width + 20, this.gameTimer.y);
             this.uiGroup.add(this.foodMeter);
 
             this.input.onDown.add(this.shootFood, this);
@@ -72,13 +86,13 @@ module Ldm34.State {
             //this.game.debug.geom(this.baby.faceHitArea,'rgba(33,44,55,0.5)', true, 3);
 
             /*var x = this.baby.mouthHitArea.x,
-                y = this.baby.mouthHitArea.y,
-                w = this.baby.mouthHitArea.width,
-                h = this.baby.mouthHitArea.height;
-            this.game.debug.geom(
-                new Phaser.Rectangle(x, y, w, h),
-                'rgba(33,44,55,0.5)'
-            );*/
+             y = this.baby.mouthHitArea.y,
+             w = this.baby.mouthHitArea.width,
+             h = this.baby.mouthHitArea.height;
+             this.game.debug.geom(
+             new Phaser.Rectangle(x, y, w, h),
+             'rgba(33,44,55,0.5)'
+             );*/
         }
 
         shootFood() {
@@ -177,7 +191,7 @@ module Ldm34.State {
 
         private gameOver() {
             this.gameTimer.running = false;
-            new Entity.GameOver(this.game, 'Something');
+            new Entity.GameOver(this.game, this.roundNames[this.levelCounter - 1]);
         }
     }
 }
