@@ -19,8 +19,12 @@ module Ldm34.Entity {
             this.onTimeLimitHit = new Phaser.Signal();
         }
 
+        /**
+         *
+         * @param totalTime in seconds
+         */
         start(totalTime:number) {
-            this.totalTime = totalTime;
+            this.totalTime = totalTime * Phaser.Timer.SECOND;
             this.startTime = (new Date()).getTime();
             this.running = true;
         }

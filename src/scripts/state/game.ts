@@ -13,15 +13,16 @@ module Ldm34.State {
         grumpLevel:Phaser.Sprite;
         foodMeter:Entity.FoodMeter;
         gameTimer:Entity.GameTimer;
+        roundTimesPerLevel:number[];
 
         create() {
             var game = this.game,
                 totalHeight = Game.LEVEL_COUNT * game.height,
                 bg = this.add.sprite(game.world.centerX, 0, 'background');
+
             bg.anchor.x = 0.5;
 
-            this.uiGroup = new Phaser.Group(game);
-            this.uiGroup.fixedToCamera = true;
+            this.roundTimesPerLevel = [30, 28, 25, 22, 20, 20, 19, 18, 18, 17, 15];
 
             game.world.setBounds(0, 0, game.width, totalHeight);
             game.camera.y = totalHeight - game.height;
@@ -32,6 +33,9 @@ module Ldm34.State {
             var chair = game.add.sprite(game.world.centerX, totalHeight, 'highchair');
             chair.anchor.x = 0.5;
             chair.anchor.y = 1;
+
+            this.uiGroup = new Phaser.Group(game);
+            this.uiGroup.fixedToCamera = true;
 
             this.player = new Entity.Player(game);
             this.player.setCursorPosition();
@@ -53,6 +57,8 @@ module Ldm34.State {
             this.baby.onFull.add(this.handleBabyFull, this);
             this.baby.onAngerChange.add(this.handleAngerChange, this);
             this.gameTimer.onTimeLimitHit.add(this.handleTimeLimitHit, this);
+
+            this.gameTimer.start(this.roundTimesPerLevel[0]);
         }
 
         render() {
@@ -79,12 +85,11 @@ module Ldm34.State {
          * Pause crosshair, baby grows
          */
         beginNewRound() {
-            this.roundTransitioning = true;
-            this.player.visible = false;
+            this.removeGameControls();
             this.roundCounter++;
             this.baby.foodLevel = 0;
             this.foodMeter.setFill(0);
-            this.gameTimer.start(15000);
+            this.gameTimer.start(this.roundTimesPerLevel[this.levelCounter - 1]);
 
             if (this.roundCounter > Game.ROUNDS_PER_LEVEL) {
                 this.beginNewLevel();
@@ -126,6 +131,11 @@ module Ldm34.State {
             this.baby.grow(Entity.Baby.SCALE_ROUND_1);
         }
 
+        private removeGameControls() {
+            this.roundTransitioning = true;
+            this.player.visible = false;
+        }
+
         private continuePlaying() {
             this.player.visible = true;
             this.roundTransitioning = false;
@@ -137,6 +147,8 @@ module Ldm34.State {
 
         private handleAngerChange(angerLevel:number) {
             if (angerLevel>= Entity.Baby.ANGER_ANGRY) {
+                this.removeGameControls();
+                this.baby.onAngerChange.remove(this.handleAngerChange);
                 this.grumpLevel.loadTexture('grump-angry');
             }
             else if (angerLevel >= Entity.Baby.ANGER_MEDIUM) {
@@ -148,8 +160,7 @@ module Ldm34.State {
         }
 
         private handleTimeLimitHit() {
-            this.roundTransitioning = true;
-            this.player.visible = false;
+            this.removeGameControls();
             this.baby.throwTantrum();
         }
     }
