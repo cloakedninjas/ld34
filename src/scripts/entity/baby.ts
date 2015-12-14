@@ -10,7 +10,7 @@ module Ldm34.Entity {
 
         static GROW_DURATION:number = 1000;
         static FOOD_VALUE:number = 1;
-        static FOOD_LEVEL_REQUIREMENT:number = 5;
+        static FOOD_LEVEL_REQUIREMENT:number = 20;
         static BODY_ROCK_SPEED:number = 0.02;
         static HEAD_ROCK_SPEED:number = 0.03;
         static BODY_ROCK_VARIANCE:number = 10;
@@ -117,7 +117,9 @@ module Ldm34.Entity {
         toggleMouth() {
             this.mouthOpen = !this.mouthOpen;
             this.mouth.loadTexture(this.mouthOpen ? 'baby-mouth' : 'baby-mouth-closed');
-            this.mouthTimer = this.game.time.events.add(Lib.random(2000, 7000), this.toggleMouth, this);
+
+            var duration = this.mouthOpen ? Lib.random(1000, 4000) : Lib.random(500, 3000);
+            this.mouthTimer = this.game.time.events.add(duration, this.toggleMouth, this);
         }
 
         addSplat(food:Food) {
