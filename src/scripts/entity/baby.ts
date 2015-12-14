@@ -4,7 +4,11 @@ module Ldm34.Entity {
         static ANGER_MEDIUM:number = 3;
         static ANGER_ANGRY:number = 6;
 
-        static START_SCALE:number = 0.53;
+        static SCALE_ROUND_1:number = 0.53;
+        static SCALE_ROUND_2:number = 0.7;
+        static SCALE_ROUND_3:number = 0.1;
+
+        static GROW_DURATION:number = 1000;
         static FOOD_VALUE:number = 1;
         static FOOD_LEVEL_REQUIREMENT:number = 20;
         static BODY_ROCK_SPEED:number = 0.02;
@@ -41,8 +45,6 @@ module Ldm34.Entity {
             this.anchor.x = 0.5;
             this.anchor.y = 0.75;
 
-            this.scaleIncrement = (1 - Baby.START_SCALE) / Baby.FOOD_LEVEL_REQUIREMENT;
-
             this.face = new Phaser.Sprite(game, 0, -230, 'baby-face');
             this.face.anchor.x = 0.5;
             this.face.anchor.y = 1;
@@ -56,8 +58,7 @@ module Ldm34.Entity {
             this.faceHitArea = new Phaser.Ellipse(0, 0, 1, 1);
             this.mouthHitArea = new Phaser.Ellipse(0, 0, 1, 1);
 
-            this.setScale(1);
-            //this.setScale(Baby.START_SCALE);
+            this.setScale(Baby.SCALE_ROUND_1);
             this.foodSplats = [];
             this.onFull = new Phaser.Signal();
             this.onAngerChange = new Phaser.Signal();
@@ -78,6 +79,8 @@ module Ldm34.Entity {
 
             this.mouthHitArea.x = this.x + this.face.x + this.mouth.x - ((this.mouth.width * this.mouth.anchor.x) * scale);
             this.mouthHitArea.y = this.y + (this.face.y * scale) + (this.mouth.y * scale) - ((this.mouth.height * this.mouth.anchor.y) * scale);
+
+            this.scaleIncrement = (1 - scale) / Baby.FOOD_LEVEL_REQUIREMENT;
         }
 
         checkFoodLanded(food:Food) {
@@ -151,12 +154,12 @@ module Ldm34.Entity {
             }
         }
 
-        /*setFoodScale() {
-            this.foodSplats.forEach(function (food:Food) {
-                food.scale.x /= this.scale.x;
-                food.scale.y /= this.scale.y;
-            });
-        }*/
+        grow(scale:number) {
+            return this.game.tweens.create(this.scale).to({
+                x: scale,
+                y: scale
+            }, Baby.GROW_DURATION, Phaser.Easing.Sinusoidal.Out, true);
+        }
 
         update() {
             if (this.anger > 0) {
@@ -167,9 +170,9 @@ module Ldm34.Entity {
             }
 
             if (this.rocking) {
-                //this.numberOfTicks++;
-                //this.angle = Math.sin(this.numberOfTicks * this.rockSpeed * Math.PI) * this.rockVariance;
-                //this.face.angle = Math.sin(this.numberOfTicks * Baby.HEAD_ROCK_SPEED * Math.PI) * Baby.HEAD_ROCK_VARIANCE;
+                this.numberOfTicks++;
+                this.angle = Math.sin(this.numberOfTicks * this.rockSpeed * Math.PI) * this.rockVariance;
+                this.face.angle = Math.sin(this.numberOfTicks * Baby.HEAD_ROCK_SPEED * Math.PI) * Baby.HEAD_ROCK_VARIANCE;
             }
         }
 
