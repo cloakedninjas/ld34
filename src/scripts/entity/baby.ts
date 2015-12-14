@@ -22,6 +22,7 @@ module Ldm34.Entity {
         faceHitArea:Phaser.Ellipse;
         mouthHitArea:Phaser.Ellipse;
 
+        onEat:Phaser.Signal;
         onFull:Phaser.Signal;
         onAngerChange:Phaser.Signal;
 
@@ -60,6 +61,7 @@ module Ldm34.Entity {
 
             this.setScale(Baby.SCALE_ROUND_1);
             this.foodSplats = [];
+            this.onEat = new Phaser.Signal();
             this.onFull = new Phaser.Signal();
             this.onAngerChange = new Phaser.Signal();
             this.rockTimer = game.time.events.add(Lib.random(2000, 5000), this.rock, this);
@@ -103,6 +105,7 @@ module Ldm34.Entity {
         feed(food:Food) {
             if (this.mouthOpen) {
                 this.foodLevel += Baby.FOOD_VALUE;
+                this.onEat.dispatch();
 
                 if (this.foodLevel >= Baby.FOOD_LEVEL_REQUIREMENT) {
                     this.onFull.dispatch();

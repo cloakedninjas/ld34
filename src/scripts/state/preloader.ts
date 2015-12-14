@@ -16,6 +16,9 @@ module Ldm34.State {
             this.load.image('grump-happy', 'assets/images/grump-happy.png');
             this.load.image('grump-medium', 'assets/images/grump-medium.png');
             this.load.image('grump-angry', 'assets/images/grump-angry.png');
+            this.load.image('food-meter-under', 'assets/images/foodmeter-under.png');
+            this.load.image('food-meter-fork', 'assets/images/foodmeter-fork.png');
+            this.load.image('food-meter-bar', 'assets/images/foodmeter-green.png');
         }
 
         create() {

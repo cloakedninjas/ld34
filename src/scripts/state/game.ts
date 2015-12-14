@@ -11,6 +11,7 @@ module Ldm34.State {
         roundCounter:number = 1;
         roundTransitioning:boolean = false;
         grumpLevel:Phaser.Sprite;
+        foodMeter:Entity.FoodMeter;
 
         create() {
             var game = this.game,
@@ -38,8 +39,14 @@ module Ldm34.State {
             this.grumpLevel = new Phaser.Sprite(game, 20, 20, 'grump-happy');
             this.uiGroup.add(this.grumpLevel);
 
+            this.foodMeter = new Entity.FoodMeter(game, this.grumpLevel.x + this.grumpLevel.width + 20  , this.grumpLevel.y);
+            this.uiGroup.add(this.foodMeter);
+
             this.input.onDown.add(this.shootFood, this);
 
+            this.baby.onEat.add(function () {
+                this.foodMeter.setFill(this.baby.foodLevel / Entity.Baby.FOOD_LEVEL_REQUIREMENT);
+            }, this);
             this.baby.onFull.add(this.handleBabyFull, this);
             this.baby.onAngerChange.add(this.handleAngerChange, this);
         }
@@ -72,6 +79,7 @@ module Ldm34.State {
             this.player.visible = false;
             this.roundCounter++;
             this.baby.foodLevel = 0;
+            this.foodMeter.setFill(0);
 
             if (this.roundCounter > Game.ROUNDS_PER_LEVEL) {
                 this.beginNewLevel();
