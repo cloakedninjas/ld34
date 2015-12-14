@@ -9,6 +9,7 @@ module Ldm34.State {
             this.load.spritesheet('play-btn', 'assets/images/play-btn.png', 186, 110, 2);
 
             this.load.image('baby-face', 'assets/images/baby-face.png');
+            this.load.image('baby-angry-face', 'assets/images/baby-angry-face.png');
             this.load.image('baby-tantrum-face', 'assets/images/baby-tantrum-face.png');
             this.load.image('baby-body', 'assets/images/baby-body.png');
             this.load.image('baby-mouth', 'assets/images/baby-mouth.png');

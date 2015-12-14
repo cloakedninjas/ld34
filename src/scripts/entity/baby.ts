@@ -198,6 +198,12 @@ module Ldm34.Entity {
                 (this.anger >= Baby.ANGER_MEDIUM && newAnger < Baby.ANGER_MEDIUM) ||
                 (this.anger >= Baby.ANGER_ANGRY && newAnger < Baby.ANGER_ANGRY)
             ) {
+                if (newAnger >= Baby.ANGER_MEDIUM) {
+                    this.face.loadTexture('baby-angry-face');
+                }
+                else if (newAnger >= Baby.ANGER_HAPPY) {
+                    this.face.loadTexture('baby-face');
+                }
                 this.onAngerChange.dispatch(newAnger);
             }
         }
