@@ -30,14 +30,14 @@ module Ldm34.Entity {
         }
 
         update() {
-            var elapsed = (new Date().getTime() - this.startTime) / this.totalTime;
-
-            if (elapsed >= 1) {
-                this.running = false;
-                this.onTimeLimitHit.dispatch();
-            }
-
             if (this.running) {
+                var elapsed = (new Date().getTime() - this.startTime) / this.totalTime;
+
+                if (elapsed >= 1) {
+                    this.running = false;
+                    this.onTimeLimitHit.dispatch();
+                }
+
                 this.fill.clear();
 
                 var ctx = this.fill.ctx,
