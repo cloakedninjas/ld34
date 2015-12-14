@@ -87,6 +87,8 @@ module Ldm34.State {
 
             this.gameTimer.start(this.roundTimesPerLevel[0]);
             this.roundTransitioning = false;
+            this.levelCounter = 1;
+            this.roundCounter = 1;
         }
 
         render() {
@@ -158,6 +160,12 @@ module Ldm34.State {
             this.roundCounter = 1;
             this.levelCounter++;
             this.baby.clearSplats();
+
+            if (this.levelCounter > Game.LEVEL_COUNT) {
+                this.removeGameControls();
+                this.gameOver();
+                return;
+            }
 
             var game = this.game,
                 y = (game.height * Game.LEVEL_COUNT) - this.levelCounter * game.height,
