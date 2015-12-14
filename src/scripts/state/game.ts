@@ -94,7 +94,7 @@ module Ldm34.State {
              'rgba(33,44,55,0.5)'
              );*/
 
-            var points = <Phaser.Point[]>this.baby.mouthHitArea.points;
+            /*var points = <Phaser.Point[]>this.baby.mouthHitArea.points;
 
             var ctx = this.game.context;
             ctx.lineWidth = 1;
@@ -108,9 +108,7 @@ module Ldm34.State {
             }, this);
 
             ctx.closePath();
-            ctx.fill();
-
-            //debugger;
+            ctx.fill();*/
         }
 
         shootFood() {
