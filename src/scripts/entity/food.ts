@@ -6,6 +6,12 @@ module Ldm34.Entity {
         static TYPE_WATERMELON:number = 3;
         static TYPE_COW:number = 4;
         static TYPE_HOUSE:number = 5;
+        static TYPE_PLANE:number = 6;
+        static TYPE_SATELLITE:number = 7;
+        static TYPE_MOON:number = 7;
+        static TYPE_PLANET:number = 9;
+        static TYPE_STAR:number = 10;
+        static TYPE_GALAXY:number = 11;
 
         game:Game;
         baby:Baby;
@@ -37,6 +43,34 @@ module Ldm34.Entity {
 
                 case Food.TYPE_COW:
                     this.loadTexture('cow');
+                    break;
+
+                case Food.TYPE_HOUSE:
+                    this.loadTexture('house');
+                    break;
+
+                case Food.TYPE_PLANE:
+                    this.loadTexture('plane');
+                    break;
+
+                case Food.TYPE_SATELLITE:
+                    this.loadTexture('satellite');
+                    break;
+
+                case Food.TYPE_MOON:
+                    this.loadTexture('moon');
+                    break;
+
+                case Food.TYPE_PLANET:
+                    this.loadTexture('planet');
+                    break;
+
+                case Food.TYPE_STAR:
+                    this.loadTexture('star');
+                    break;
+
+                case Food.TYPE_GALAXY:
+                    this.loadTexture('galaxy');
                     break;
             }
 

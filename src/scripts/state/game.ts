@@ -28,7 +28,14 @@ module Ldm34.State {
                 Entity.Food.TYPE_PEA,
                 Entity.Food.TYPE_WHOLE_CARROT,
                 Entity.Food.TYPE_WATERMELON,
-                Entity.Food.TYPE_COW
+                Entity.Food.TYPE_COW,
+                Entity.Food.TYPE_HOUSE,
+                Entity.Food.TYPE_PLANE,
+                Entity.Food.TYPE_SATELLITE,
+                Entity.Food.TYPE_MOON,
+                Entity.Food.TYPE_PLANET,
+                Entity.Food.TYPE_STAR,
+                Entity.Food.TYPE_GALAXY
             ];
             this.roundNames = [
                 'Baby',

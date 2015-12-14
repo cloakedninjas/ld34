@@ -24,6 +24,21 @@ module Ldm34.State {
             this.load.image('watermelon-splat', 'assets/images/food-watermelon-splat.png');
             this.load.image('cow', 'assets/images/food-cow.png');
             this.load.image('cow-splat', 'assets/images/food-cow-splat.png');
+            this.load.image('galaxy', 'assets/images/food-galaxy.png');
+            this.load.image('galaxy-splat', 'assets/images/food-galaxy-splat.png');
+            this.load.image('house', 'assets/images/food-house.png');
+            this.load.image('house-splat', 'assets/images/food-house-splat.png');
+            this.load.image('moon', 'assets/images/food-moon.png');
+            this.load.image('moon-splat', 'assets/images/food-moon-splat.png');
+            this.load.image('plane', 'assets/images/food-plane.png');
+            this.load.image('plane-splat', 'assets/images/food-plane-splat.png');
+            this.load.image('planet', 'assets/images/food-planet.png');
+            this.load.image('planet-splat', 'assets/images/food-planet-splat.png');
+            this.load.image('satellite', 'assets/images/food-satellite.png');
+            this.load.image('satellite-splat', 'assets/images/food-satellite-splat.png');
+            this.load.image('star', 'assets/images/food-sun.png');
+            this.load.image('star-splat', 'assets/images/food-sun-splat.png');
+
             this.load.image('grump-happy', 'assets/images/grump-happy.png');
             this.load.image('grump-medium', 'assets/images/grump-medium.png');
             this.load.image('grump-angry', 'assets/images/grump-angry.png');
