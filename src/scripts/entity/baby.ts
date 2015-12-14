@@ -6,11 +6,11 @@ module Ldm34.Entity {
 
         static SCALE_ROUND_1:number = 0.53;
         static SCALE_ROUND_2:number = 0.7;
-        static SCALE_ROUND_3:number = 0.1;
+        static SCALE_ROUND_3:number = 1;
 
         static GROW_DURATION:number = 1000;
         static FOOD_VALUE:number = 1;
-        static FOOD_LEVEL_REQUIREMENT:number = 20;
+        static FOOD_LEVEL_REQUIREMENT:number = 5;
         static BODY_ROCK_SPEED:number = 0.02;
         static HEAD_ROCK_SPEED:number = 0.03;
         static BODY_ROCK_VARIANCE:number = 10;
@@ -74,11 +74,14 @@ module Ldm34.Entity {
             this.faceHitArea.x = this.x + this.face.x - ((this.face.width * this.face.anchor.x) * scale);
             this.faceHitArea.y = this.y + (this.face.y * scale) - ((this.face.height * this.face.anchor.y) * scale);
 
-            this.mouthHitArea.width = this.mouth.width * scale;
-            this.mouthHitArea.height = this.mouth.height * scale;
+            var mouthWidth = 260,
+                mouthHeight = 158;
 
-            this.mouthHitArea.x = this.x + this.face.x + this.mouth.x - ((this.mouth.width * this.mouth.anchor.x) * scale);
-            this.mouthHitArea.y = this.y + (this.face.y * scale) + (this.mouth.y * scale) - ((this.mouth.height * this.mouth.anchor.y) * scale);
+            this.mouthHitArea.width = mouthWidth * scale;
+            this.mouthHitArea.height = mouthHeight * scale;
+
+            this.mouthHitArea.x = this.x + this.face.x + this.mouth.x - ((mouthWidth * this.mouth.anchor.x) * scale);
+            this.mouthHitArea.y = this.y + (this.face.y * scale) + (this.mouth.y * scale) - ((mouthHeight * this.mouth.anchor.y) * scale);
 
             this.scaleIncrement = (1 - scale) / Baby.FOOD_LEVEL_REQUIREMENT;
         }
@@ -101,7 +104,7 @@ module Ldm34.Entity {
             if (this.mouthOpen) {
                 this.foodLevel += Baby.FOOD_VALUE;
 
-                if (this.foodLevel === Baby.FOOD_LEVEL_REQUIREMENT) {
+                if (this.foodLevel >= Baby.FOOD_LEVEL_REQUIREMENT) {
                     this.onFull.dispatch();
                 }
             }
@@ -155,6 +158,7 @@ module Ldm34.Entity {
         }
 
         grow(scale:number) {
+            this.game.time.events.add(Baby.GROW_DURATION + 1, this.setScale.bind(this, scale));
             return this.game.tweens.create(this.scale).to({
                 x: scale,
                 y: scale

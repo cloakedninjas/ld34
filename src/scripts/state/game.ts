@@ -44,7 +44,7 @@ module Ldm34.State {
             this.baby.onAngerChange.add(this.handleAngerChange, this);
         }
 
-        /*render() {
+        render() {
             //this.game.debug.geom(this.baby.faceHitArea,'rgba(33,44,55,0.5)', true, 3);
 
             var x = this.baby.mouthHitArea.x,
@@ -55,7 +55,7 @@ module Ldm34.State {
                 new Phaser.Rectangle(x, y, w, h),
                 'rgba(33,44,55,0.5)'
             );
-        }*/
+        }
 
         shootFood() {
             if (!this.roundTransitioning) {
@@ -73,7 +73,7 @@ module Ldm34.State {
             this.roundCounter++;
             this.baby.foodLevel = 0;
 
-            if (this.roundCounter === Game.ROUNDS_PER_LEVEL) {
+            if (this.roundCounter > Game.ROUNDS_PER_LEVEL) {
                 this.beginNewLevel();
             }
             else {
@@ -97,23 +97,19 @@ module Ldm34.State {
 
             var game = this.game,
                 y = (game.height * Game.LEVEL_COUNT) - this.levelCounter * game.height,
-                duration = 1000,
-                tween;
+                duration = 1000;
 
             this.tweens.create(this.camera).to({
                 y: y
             }, duration, Phaser.Easing.Sinusoidal.Out, true);
 
-            this.tweens.create(this.baby).to({
+            var tween = this.tweens.create(this.baby).to({
                 y: this.baby.y - game.height
             }, duration, Phaser.Easing.Sinusoidal.Out, true);
 
-            tween = this.tweens.create(this.baby.scale).to({
-                x: Entity.Baby.SCALE_ROUND_1,
-                y: Entity.Baby.SCALE_ROUND_1
-            }, duration, Phaser.Easing.Sinusoidal.Out, true);
-
             tween.onComplete.add(this.continuePlaying, this);
+
+            this.baby.grow(Entity.Baby.SCALE_ROUND_1);
         }
 
         private continuePlaying() {
