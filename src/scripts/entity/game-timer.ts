@@ -27,6 +27,10 @@ module Ldm34.Entity {
             this.totalTime = totalTime * Phaser.Timer.SECOND;
             this.startTime = (new Date()).getTime();
             this.running = true;
+
+            if (this.sound && this.sound.isPlaying) {
+                this.sound.stop();
+            }
         }
 
         update() {
