@@ -7,6 +7,7 @@ module Ldm34.State {
             this.loadingBar = new Entity.PreloadBar(this.game);
 
             this.load.spritesheet('play-btn', 'assets/images/play-btn.png', 186, 110, 2);
+            this.load.spritesheet('music-btn', 'assets/images/music-btn.png', 109, 109, 2);
 
             this.load.image('baby-face', 'assets/images/baby-face.png');
             this.load.image('baby-angry-face', 'assets/images/baby-angry-face.png');
