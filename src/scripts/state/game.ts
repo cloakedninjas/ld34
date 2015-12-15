@@ -204,6 +204,7 @@ module Ldm34.State {
         }
 
         private gameOver() {
+            this.game.bgMusic.stop();
             this.gameTimer.running = false;
 
             var levelCounter = Math.min(this.levelCounter - 1, 11);
