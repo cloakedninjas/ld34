@@ -48,6 +48,10 @@ module Ldm34.State {
             this.load.image('food-meter-bar', 'assets/images/foodmeter-green.png');
             this.load.image('clock', 'assets/images/clock.png');
 
+            this.load.audio('splat', 'assets/sounds/splat.mp3');
+            this.load.audio('woosh', 'assets/sounds/woosh.mp3');
+            this.load.audio('tick-tock', 'assets/sounds/tick-tock.mp3');
+
             WebFont.load(<WebFont.Config>{
                 google: {
                     families: ['Montserrat', 'Righteous']

@@ -75,6 +75,7 @@ module Ldm34.Entity {
                     break;
             }
 
+            game.sound.play('woosh');
             game.physics.enable(this, Phaser.Physics.ARCADE);
         }
 

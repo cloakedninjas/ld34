@@ -1,10 +1,11 @@
 module Ldm34.Entity {
     export class GameTimer extends Phaser.Sprite {
-
         game:Game;
         startTime:number;
         totalTime:number;
         running:boolean = false;
+        playingSound:boolean = false;
+        sound:Phaser.Sound;
         fill:Phaser.BitmapData;
         fillImage:Phaser.Sprite;
         onTimeLimitHit:Phaser.Signal;
@@ -31,11 +32,18 @@ module Ldm34.Entity {
 
         update() {
             if (this.running) {
-                var elapsed = (new Date().getTime() - this.startTime) / this.totalTime;
+                var now = (new Date()).getTime(),
+                    elapsed = now - this.startTime,
+                    complete = elapsed / this.totalTime;
 
-                if (elapsed >= 1) {
+                if (complete >= 1) {
+                    this.sound.stop();
                     this.running = false;
                     this.onTimeLimitHit.dispatch();
+                }
+                else if (this.totalTime - elapsed <= 5000 && !this.playingSound) {
+                    this.playingSound = true;
+                    this.sound = this.game.sound.play('tick-tock', 1, true);
                 }
 
                 this.fill.clear();
@@ -45,7 +53,7 @@ module Ldm34.Entity {
                     y = 26,
                     radius = 22,
                     startAngle = -90 * PIXI.DEG_TO_RAD,
-                    endAngle = (PIXI.PI_2 * elapsed) + startAngle;
+                    endAngle = (PIXI.PI_2 * complete) + startAngle;
 
                 ctx.fillStyle = 'rgb(111, 120, 159)';
                 ctx.lineWidth = 2;

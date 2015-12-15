@@ -143,6 +143,8 @@ module Ldm34.Entity {
             this.face.addChild(food);
             this.foodSplats.push(food);
 
+            this.game.sound.play('splat');
+
             food.x -= this.x;
             food.y -= this.y;
 
