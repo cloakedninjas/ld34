@@ -11,11 +11,10 @@ module Ldm34.State {
 
             game.add.sprite(0, 0, 'title');
 
-            var y = 360;
+            var y = 400;
 
-            btn = game.add.button(250, y, 'play-btn', this.handleButtonClick, this, null, 0, 1, 0);
-
-            btn = game.add.button(450, y, 'music-btn', this.handleMuteClick, this, null, 0, 1, 0);
+            game.add.button(250, y, 'play-btn', this.handleButtonClick, this, null, 0, 1, 0);
+            game.add.button(450, y, 'music-btn', this.handleMuteClick, this, null, 0, 1, 0);
 
             var credit1 = game.add.text(10, game.height - 30, '@cloakedninjas', {
                     font: '20px Montserrat',
