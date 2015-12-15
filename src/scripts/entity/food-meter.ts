@@ -3,7 +3,6 @@ module Ldm34.Entity {
         static FILL_WIDTH:number = 136;
         static FILL_HEIGHT:number = 27;
 
-        game:Game;
         fillPercent:number = 0;
         bar:Phaser.BitmapData;
         barImage:Phaser.Sprite;

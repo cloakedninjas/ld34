@@ -3,6 +3,8 @@
 module Ldm34 {
     export class Game extends Phaser.Game {
 
+        bgMusic:Phaser.Sound;
+
         constructor() {
             super({
                 width: 800,

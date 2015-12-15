@@ -1,8 +1,12 @@
 module Ldm34.State {
     export class Title extends Phaser.State {
+        game:Ldm34.Game;
 
         create() {
             var game = this.game;
+
+            game.bgMusic = game.sound.play('music');
+            game.bgMusic.loop = true;
 
             game.add.sprite(0, 0, 'title');
             var btn = game.add.button(game.world.centerX, game.height - 200, 'play-btn', this.handleButtonClick, this, null, 0, 1, 0);

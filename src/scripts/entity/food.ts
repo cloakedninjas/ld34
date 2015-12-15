@@ -13,7 +13,6 @@ module Ldm34.Entity {
         static TYPE_STAR:number = 10;
         static TYPE_GALAXY:number = 11;
 
-        game:Game;
         baby:Baby;
         destination:Phaser.Point;
         foodType:number;

@@ -1,6 +1,5 @@
 module Ldm34.Entity {
     export class GameTimer extends Phaser.Sprite {
-        game:Game;
         startTime:number;
         totalTime:number;
         running:boolean = false;

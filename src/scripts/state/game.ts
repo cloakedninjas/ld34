@@ -3,6 +3,7 @@ module Ldm34.State {
         static LEVEL_COUNT:number = 11;
         static ROUNDS_PER_LEVEL:number = 3;
 
+        game:Ldm34.Game;
         uiGroup:Phaser.Group;
         baby:Entity.Baby;
         player:Entity.Player;

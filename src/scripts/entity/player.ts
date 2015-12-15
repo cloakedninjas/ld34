@@ -1,7 +1,5 @@
 module Ldm34.Entity {
     export class Player extends Phaser.Sprite {
-        game:Game;
-
         constructor(game:Game) {
             super(game, game.world.centerX, game.world.centerX, 'crosshair');
 

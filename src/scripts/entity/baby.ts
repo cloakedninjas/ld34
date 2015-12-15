@@ -16,7 +16,6 @@ module Ldm34.Entity {
         static BODY_ROCK_VARIANCE:number = 10;
         static HEAD_ROCK_VARIANCE:number = 12;
 
-        game:Game;
         face:Phaser.Sprite;
         mouth:Phaser.Sprite;
         faceHitArea:Phaser.Ellipse;

@@ -1,6 +1,6 @@
 module Ldm34.Entity {
     export class GameOver extends Phaser.Sprite {
-        game:Game;
+        game:Ldm34.Game;
 
         constructor(game:Game, level:string) {
             super(game, 0, 0);

@@ -1,6 +1,6 @@
 module Ldm34.Entity {
     export class PreloadBar {
-        game:Game;
+        game:Ldm34.Game;
         width:number;
         height:number;
         progressBar:Phaser.BitmapData;
