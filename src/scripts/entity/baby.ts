@@ -37,7 +37,7 @@ module Ldm34.Entity {
         foodLevel:number = 0;
         anger:number = 0;
         angerIncrement:number = 1;
-        angerDecrement:number = 0; //0.01;
+        angerDecrement:number = 0.01;
 
         constructor(game:Game, x, y) {
             super(game, x, y, 'baby-body');
